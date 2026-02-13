@@ -1,0 +1,125 @@
+[DEFAULT]
+bantime = 48h 
+find_time = 30m
+maxretry = 5
+o_5x = 89
+o_xx = 39
+# localhost, localhost, INFRA, OFF_LIM, BTA, BTAS
+ignoreip = 127.0.0.1/8, ::1, 10.250.250.0/24, 10.250.1%(o_xx)s.0/2, 169.254.169.254, 10.250.250.11
+banaction = iptables-allports
+
+### SSH ###
+
+[sshd] 
+port=22
+enabled=true
+
+[ufw-portscan]
+enabled=true
+port=all
+filter=ufw-portscan
+logpath=/var/log/ufw.log
+
+
+### FTP ###
+
+# [proftpd] 
+# enabled=true
+# [pure-ftpd]
+# enabled=true
+# [gssftpd]
+# enabled=true
+# [wuftpd]
+# enabled=true
+# [vsftpd]
+# enabled=true
+
+### HTTP(S) ###
+
+# [apache-auth]
+# enabled=true
+# [apache-badbots]
+# enabled=true
+# [apache-noscript]
+# enabled=true
+# [apache-overflows]
+# enabled=true
+# [apache-nohome]
+# enabled=true
+# [apache-botsearch]
+# enabled=true
+# [apache-fakegooglebot]
+# enabled=true
+# [apache-modsecurity]
+# enabled=true
+# 
+# [nginx-http-auth]
+# mode=aggressive
+# enabled=true
+# [nginx-botsearch]
+# enabled=true
+# [nginx-bad-request]
+# enabled=true
+# [nginx-forbidden]
+# enabled=true
+# 
+# [php-url-fopen]
+# enabled=true
+# [phpmyadmin-syslog]
+# enabled=true
+# 
+# [lighttpd-auth]
+# enabled=true
+ 
+### MAIL: POP3(S), IMAP(S), SMTP ###
+
+# [assp]
+# enabled=true 
+# 
+# [courier-smtp]
+# enabled=true 
+# [courier-auth]
+# enabled=true
+# 
+# [postfix]
+# enabled=true 
+# [postfix-rbl]
+# enabled=true
+# [postfix-sasl]
+# enabled=true
+# 
+# [sendmail-auth]
+# enabled=true
+# [sendmail-reject]
+# enabled=true
+# 
+# [qmail-rbl]
+# enabled=true
+# 
+# [dovecot]
+# enabled=true
+# [sieve]
+# enabled=true
+# 
+# [solid-pop3d]
+# enabled=true
+# 
+# [exim]
+# enabled=true
+# [exim-spam]
+# enabled=true
+# 
+# [kerio]
+# enabled=true
+# 
+# [perdition]
+# enabled=true
+# 
+# [squirrelmail]
+# enabled=true
+# 
+# [cyrus-imap]
+# enabled=true
+# 
+# [uwimap-auth]
+# enabled=true
