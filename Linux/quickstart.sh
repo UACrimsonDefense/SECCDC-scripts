@@ -56,7 +56,9 @@ if [ -f $sshd_config ]; then
 else
     echo "ERROR: sshd_config not found. Is this running dropbear?" 1>&2
 fi
-
+#TODO make lists of vital programs
+#TODO configure links and jail
+#TODO additional system hardening
 
 systemctl start clamd
 clamonacc > /var/log/clamonacc.txt 
