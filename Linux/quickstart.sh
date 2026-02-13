@@ -21,7 +21,7 @@ elif exists pacman; then
     pacman -Sy lynis clamav ufw fail2ban python-pyinotify wget libmodsecurity zaproxy python
 fi
 
-nohup bash -c 'freshclam && mkdir /var/quarantine && clamscan -l /var/log/clamscan.log --move /var/quarantine -r /' > /var/log/clamscan.txt
+nohup sh -c 'freshclam && mkdir /var/quarantine && clamscan -l /var/log/clamscan.log --move /var/quarantine -r /' > /var/log/clamscan.txt
 nohup lynis audit system > /var/log/lynis_stdout.txt
 
 # Configuring clamav 
@@ -40,13 +40,19 @@ else
 fi
 
 # Configuring SSH
+mkdir /jail
+
 sshd_config=$(find /etc -name 'sshd_config' 2> /dev/null | head -1)
+wheel=$(grep -o '^%\w\+' /etc/sudoers | tr -d '%') 
+
 if [ -f $sshd_config ]; then
     sed -i 's/^#?PermitRootLogin.*$/PermitRootLogin no/' $sshd_config
     sed -i 's/^#?AllowTcpForwarding.*$/AllowTcpForwarding no/' $sshd_config
     sed -i 's/^#?AllowAgentForwarding.*$/AllowAgentForwarding no/' $sshd_config
     sed -i 's/^#?X11Forwarding.*$/X11Forwarding no/' $sshd_config
     sed -i 's/^#?PermitTunnel.*$/PermitTunnel no/' $sshd_config
+    sed -i 's@^#?ChrootDirectory.*$@ChrootDirectory /jail@' $sshd_config
+    echo -e "Match Group $wheel\n    ChrootDirectory /" >> $sshd_config
 else
     echo "ERROR: sshd_config not found. Is this running dropbear?" 1>&2
 fi
@@ -56,5 +62,5 @@ systemctl start clamd
 clamonacc > /var/log/clamonacc.txt 
 
 if exists aide; then
-    nohup bash -c 'aide -c /etc/aide.conf --init && mv /var/lib/aide/aide.db.new /var/lib/aide/aide.db' > /var/log/aide_init.txt
+    nohup sh -c 'aide -c /etc/aide.conf --init && mv /var/lib/aide/aide.db.new /var/lib/aide/aide.db' > /var/log/aide_init.txt
 fi
