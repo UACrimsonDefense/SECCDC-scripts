@@ -1,2 +1,2 @@
-From arch:latest
+From archlinux:latest
 # Run apt update && apt install -y sudo

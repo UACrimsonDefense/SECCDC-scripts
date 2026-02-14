@@ -2,17 +2,19 @@
 
 if [ -z "$(docker image ls 2> /dev/null| grep ub-test )" ]; then
 	echo building ubuntu
-	docker image build -t ub-test:1 ./images 
-	echo building arch
-	docker image build -t arch-test:1 ./images 
+	docker build -f Dockerfile.ubuntu-test -t ubuntu-test:latest .
+	# echo building arch
+	# docker build -f Dockerfile.arch-test -t arch-test:latest .
 fi
 
-echo -e "trying on ubuntu \n"
-	docker container stop quickstart-ubuntu
-	docker container rm -f quickstart-ubuntu
-	docker container run --name quickstart-ubuntu -v ./:/home -it ub-test:1 /bin/bash -c "/home/quickstart.sh && /bin/bash"
+tryDistro(){
+	echo -e "trying on ubuntu \n"
+	if [ -n "(docker container ps -a | grep $1)" ]; then
+		docker container kill quickstart-$1
+		docker container rm -f quickstart-$1
+	fi
+	docker container run --name quickstart-$1 -v ./:/home -it $1-test:latest /bin/bash -c "/home/quickstart.sh && /bin/bash"
+}
 
-echo -e "trying on arch \n"
-	docker container stop quickstart-arch
-	docker container rm -f quickstart-arch
-	docker container run --name quickstart-arch -v ./:/home -it arch-test:1 /bin/bash
+	tryDistro ubuntu
+	# tryDistro arch
