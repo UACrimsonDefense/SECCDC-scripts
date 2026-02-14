@@ -1,11 +1,10 @@
 #! /usr/bin/sh
-
-if [ -z "$(docker image ls 2> /dev/null| grep ub-test )" ]; then
-	echo building ubuntu
-	docker build -f Dockerfile.ubuntu-test -t ubuntu-test:latest .
-	# echo building arch
-	docker build -f Dockerfile.arch-test -t arch-test:latest .
-fi
+buildImage(){
+	if [ -z "$(docker image ls 2> /dev/null| grep $1-test )" ]; then
+		echo building $1
+		docker build -f Dockerfile.$1-test -t $1-test:latest .
+	fi
+}
 
 tryDistro(){
 	echo -e "trying on $1 \n"
@@ -16,5 +15,7 @@ tryDistro(){
 	docker container run --name $1-test -v ./:/home -it $1-test:latest /bin/bash -c "/home/quickstart.sh && /bin/bash"
 }
 
+	buildImage ubuntu
 	tryDistro ubuntu
+
 	# tryDistro arch
