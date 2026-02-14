@@ -1,0 +1,2 @@
+From arch:latest
+# Run apt update && apt install -y sudo
