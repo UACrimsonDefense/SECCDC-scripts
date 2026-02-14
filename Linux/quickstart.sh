@@ -40,7 +40,8 @@ else
 fi
 
 # Configuring SSH
-mkdir /jail
+mkdir -p /jail/{bin,home}
+cp /bin/bash /jail/bin 
 
 sshd_config=$(find /etc -name 'sshd_config' 2> /dev/null | head -1)
 wheel=$(grep -o '^%\w\+' /etc/sudoers | tr -d '%') 
