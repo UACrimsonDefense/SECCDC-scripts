@@ -8,8 +8,8 @@ if [ -z "$(docker image ls 2> /dev/null| grep ub-test )" ]; then
 fi
 
 tryDistro(){
-	echo -e "trying on ubuntu \n"
-	if [ -z "(docker container ps -a | grep $1)" ]; then
+	echo -e "trying on $1 \n"
+	if [ -n "(docker container ps -a | grep $1-test)" ]; then
 		docker container kill $1-test
 		docker container rm -f $1-test
 	fi
@@ -17,4 +17,4 @@ tryDistro(){
 }
 
 	tryDistro ubuntu
-	tryDistro arch
+	# tryDistro arch
