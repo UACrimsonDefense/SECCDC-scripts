@@ -40,8 +40,6 @@ else
 fi
 
 # Configuring SSH
-mkdir -p /jail/{bin,home}
-cp /bin/bash /jail/bin 
 
 sshd_config=$(find /etc -name 'sshd_config' 2> /dev/null | head -1)
 wheel=$(grep -o '^%\w\+' /etc/sudoers | tr -d '%') 
@@ -58,8 +56,16 @@ else
     echo "ERROR: sshd_config not found. Is this running dropbear?" 1>&2
 fi
 #TODO make lists of vital programs
-safe_programs="cd ls pwd whoami tty groups sleep touch rm rmdir more less cat nl wc dir uniq arch id hostid uname logname seq test uptime"
-writeable_programs="yes printenv echo nano mktemp stty" #in descending order of danger
+
+mkdir -p /jail/{bin,home}
+cp /bin/bash /jail/bin 
+
+safe_programs=("ls" "pwd" "whoami" "tty" "groups" "sleep" "touch" "rm" "rmdir" "more" "less" "cat" "nl" "wc" "dir" "uniq" "id" "hostid" "uname" "logname" "seq" "test" "uptime")
+writeable_programs=("yes" "printenv" "echo" "nano" "mktemp" "stty") #in descending order of danger
+for program in safe_programs; do
+    ln /usr/bin/$program /jail/bin/
+    
+
 #TODO configure links and jail
 #TODO additional system hardening
 
