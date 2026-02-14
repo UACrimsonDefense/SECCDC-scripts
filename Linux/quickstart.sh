@@ -75,3 +75,4 @@ clamonacc > /var/log/clamonacc.txt
 if exists aide; then
     nohup sh -c 'aide -c /etc/aide.conf --init && mv /var/lib/aide/aide.db.new /var/lib/aide/aide.db' > /var/log/aide_init.txt
 fi
+read

@@ -1,2 +1,2 @@
 From ubuntu:latest
-run apt update && apt install -y sudo
+Run apt update && apt install -y sudo
