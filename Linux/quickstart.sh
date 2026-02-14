@@ -58,6 +58,8 @@ else
     echo "ERROR: sshd_config not found. Is this running dropbear?" 1>&2
 fi
 #TODO make lists of vital programs
+safe_programs="cd ls pwd whoami tty groups sleep touch rm rmdir more less cat nl wc dir uniq arch id hostid uname logname seq test uptime"
+writeable_programs="yes printenv echo nano mktemp stty" #in descending order of danger
 #TODO configure links and jail
 #TODO additional system hardening
 
