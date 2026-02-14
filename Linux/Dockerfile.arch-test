@@ -1,2 +1,3 @@
 From archlinux:latest
-# Run apt update && apt install -y sudo
+Run pacman -Sy 
+Run pacman -S sudo --noconfirm
