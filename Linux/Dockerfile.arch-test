@@ -1,0 +1,3 @@
+From archlinux:latest
+Run pacman -Sy 
+Run pacman -S sudo --noconfirm
