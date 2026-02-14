@@ -56,7 +56,7 @@ else
 fi
 
 echo "Making Jail"
-mkdir -p /jail/{bin,home,lib}
+mkdir -p /jail/{bin,home}
 mkdir -p /jail/usr/bin
 
 safe_programs=("sh" "bash" "ls" "pwd" "whoami" "tty" "groups" "sleep" "touch" "rm" "rmdir" "more" "less" "cat" "nl" "wc" "dir" "uniq" "id" "hostid" "uname" "logname" "seq" "test" "uptime")
