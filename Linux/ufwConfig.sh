@@ -10,6 +10,8 @@ BTA="169.254.169.254"
 BTAS="10.250.250.11"
 
 SSH_PORT=22
+
+# What inbound services need to be allowed for this machine?
 SCORED=(
 #    "DNS"           # DNS
 #    "22/tcp"        # FTP
@@ -29,10 +31,15 @@ SCORED=(
 #    "IMAPS"         # IMAPS
 #    "SMTP"          # SMTP
 )
-DEPS=() # Other in-network services that this machine needs access to 
+
+# What machines and ports/apps does this need outbound access to?
+# Please use only the port syntax and not app syntax, UFW will complain otherwise
+DEPS=(
+#    "proto tcp to 10.250.$O_5X.10 port 443"
+)
 
 
-ufw reset 
+echo 'y' | ufw reset 
 ufw disable 
 
 ufw default deny incoming
@@ -44,10 +51,12 @@ ufw allow   from $OFF_LIM
 ufw allow   from $INFRA
 
 for scored in "${SCORED[@]}"; do 
-    echo $scored
     ufw allow "$scored"
 done
 
+for dep in "${DEPS[@]}"; do 
+    ufw allow out $dep
+done
 
 ufw allow   out to $OFF_LIM
 ufw allow   out to $BTA port 80 
