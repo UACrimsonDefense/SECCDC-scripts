@@ -28,7 +28,7 @@ if [ -z $1 ]; then
 	for distro in "${workingDistros[@]}"; do
 		isInteractive = ""
 		runDistro $distro
-		read
+		read -p "press ENTER to continue"
 	done
 else
 	runDistro $1
