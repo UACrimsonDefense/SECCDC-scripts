@@ -15,7 +15,11 @@ tryDistro(){
 	docker container run --name $1-test -v ./:/home -it $1-test:latest /bin/bash -c "/home/quickstart.sh && /bin/bash"
 }
 
-	buildImage ubuntu
-	tryDistro ubuntu
+workingDistros=("ubuntu" "arch" "fedora" "alpine")
 
-	# tryDistro arch
+for distro in "${workingDistros[$1]}"; do
+	echo $distro
+	buildImage $distro
+	tryDistro $distro
+done
+
